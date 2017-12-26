@@ -29,7 +29,6 @@ public class Test {
 		try {
 			csvFile = args[0];
 			inputAmount = Double.valueOf(args[1]);
-			//inputAmount Validation
 
 			if(inputAmount  < 1000.00 || inputAmount > 15000.00) {
 				System.out.println("Please input the amount greater than 1000 and less than 15000");
@@ -95,21 +94,14 @@ public class Test {
 
 	public static void calculate(Double p, Double r, int n, int t) {
 		double amount = p * Math.pow(1 + (r / n), n * t);
-		double interest = amount - p;
 		double monthlyRepayment = amount/36;
 		double rateInterest = r*100;
-		
 		ResultSet rs = new ResultSet();
 		rs.setMonthlyRepayment(String.valueOf(monthlyRepayment));
 		rs.setRateOfInterest(String.valueOf(rateInterest));
 		rs.setTotalAmount(amount);
 		resultSet.add(rs);
-/*		System.out.println("-------------------------------------------------");
-		System.out.println("Requested Amount :" + inputAmount);
-		System.out.println("Rate : " + rateInterest);
-		System.out.println("Monthly Repayment " + monthlyRepayment);
-		System.out.println("Total Repayment : " + amount);
-*/	}
+	}
 
 	public static List<MarketData> getMarketDataList() {
 		return marketDataList;
