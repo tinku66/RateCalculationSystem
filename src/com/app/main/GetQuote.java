@@ -28,8 +28,6 @@ public class GetQuote {
 
 	public static void main(String[] args) {
 
-		System.out.println( "Welcome to ZOPA!" );
-
 		String csvFile = "";
 
 		try {
@@ -90,7 +88,6 @@ public class GetQuote {
 		Collections.sort(resultSet, new MarketDataRateComparator());
 		for(ResultSet r : resultSet) {
 			DecimalFormat f = new DecimalFormat("##.00");
-			System.out.println("-------------------------------------------------");
 			System.out.println("Requested Amount :" + f.format(inputAmount));
 			System.out.println("Rate : " + r.getRateOfInterest());
 			System.out.println("Monthly Repayment " + f.format(Double.parseDouble(r.getMonthlyRepayment())));
