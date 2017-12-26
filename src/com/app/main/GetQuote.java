@@ -37,21 +37,21 @@ public class GetQuote {
 			inputAmount = Double.valueOf(args[1]);
 
 			if(inputAmount  < 1000.00 || inputAmount > 15000.00) {
-				System.out.println("Please input the amount greater than 1000 and less than 15000");
+				System.out.println("Please input amount between 1000.00 to 15000.00");
 				System.exit(0);
 				return;
 			}else {
 				if (inputAmount % 100 == 0) {
 
 				}else {
-					System.out.println("Please input the amount in the multiples of 100 between 1000 to 15000");
+					System.out.println("Please input amount in the multiples of 100.00 between 1000.00 to 15000.00");
 					System.exit(0);
 					return;
 				}
 			}
 
 		} catch (Exception e) {
-			System.out.println("Please provide the file Name and the amount");
+			System.out.println("Please provide file Name and amount");
 			System.exit(0);
 		}
 
