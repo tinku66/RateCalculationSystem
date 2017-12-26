@@ -89,6 +89,7 @@ public class Test {
 			System.out.println("Rate : " + r.getRateOfInterest());
 			System.out.println("Monthly Repayment " + r.getMonthlyRepayment());
 			System.out.println("Total Repayment : " + r.getTotalAmount());
+			return;
 		}
 	}
 
