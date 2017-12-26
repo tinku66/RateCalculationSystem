@@ -6,6 +6,7 @@ package com.app;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,19 +14,20 @@ import com.app.MarketDataRateComparator.MarketDataRateComparator;
 import com.app.dto.*;
 
 public class Test {
-	
+
 	public static final int NoOfMonths = 12;
 	public static final int NoOfYears = 3;
 	public static Double inputAmount = 0.00;
 	public static List<MarketData> marketDataList = new ArrayList<MarketData>();
-	public static List<MarketData> eligibleMarketDataList = new ArrayList<MarketData>();
 	public static List<ResultSet> resultSet = new ArrayList<ResultSet>();
-	
-	
+
+
 	public static void main(String[] args) {
 
+		System.out.println( "Welcome to ZOPA!" );
+
 		String csvFile = "";
-		
+
 		try {
 			csvFile = args[0];
 			inputAmount = Double.valueOf(args[1]);
@@ -74,23 +76,29 @@ public class Test {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		for(MarketData mkd : marketDataList) {
 			if(inputAmount<mkd.getAmount()){
-				eligibleMarketDataList.add(mkd);
 				calculate(inputAmount,(double)mkd.getInterestRate(),NoOfMonths,NoOfYears);
 			}
 		}
-		
+
 		Collections.sort(resultSet, new MarketDataRateComparator());
 		for(ResultSet r : resultSet) {
+			DecimalFormat f = new DecimalFormat("##.00");
 			System.out.println("-------------------------------------------------");
-			System.out.println("Requested Amount :" + inputAmount);
+			System.out.println("Requested Amount :" + f.format(inputAmount));
 			System.out.println("Rate : " + r.getRateOfInterest());
-			System.out.println("Monthly Repayment " + r.getMonthlyRepayment());
-			System.out.println("Total Repayment : " + r.getTotalAmount());
+			System.out.println("Monthly Repayment " + f.format(Double.parseDouble(r.getMonthlyRepayment())));
+			System.out.println("Total Repayment : " + f.format((r.getTotalAmount())));
 			return;
 		}
+		//  if market does not have sufficient offers from lenders to satisfy the loan , then the system will throw the below error 
+		if(resultSet.isEmpty()) {
+			System.out.println("Currently we are not able to provide quote for the requested amount , Please reach out to our customer service for the quote");
+			return;
+		}
+
 	}
 
 	public static void calculate(Double p, Double r, int n, int t) {
