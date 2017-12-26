@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.app;
+package com.app.main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,7 +13,7 @@ import java.util.List;
 import com.app.MarketDataRateComparator.MarketDataRateComparator;
 import com.app.dto.*;
 
-public class Test {
+public class GetQuote {
 
 	public static final int NoOfMonths = 12;
 	public static final int NoOfYears = 3;
@@ -117,7 +117,7 @@ public class Test {
 	}
 
 	public static void setMarketDataList(List<MarketData> marketDataList) {
-		Test.marketDataList = marketDataList;
+		GetQuote.marketDataList = marketDataList;
 	}
 
 
