@@ -3,33 +3,29 @@
  */
 package com.app;
 
-/**
- * @author Tinku & Lavanya
- *
- */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.security.auth.callback.Callback;
-
+import com.app.MarketDataRateComparator.MarketDataRateComparator;
 import com.app.dto.*;
 
 public class Test {
-
+	
+	public static final int NoOfMonths = 12;
+	public static final int NoOfYears = 3;
 	public static Double inputAmount = 0.00;
-
+	public static List<MarketData> marketDataList = new ArrayList<MarketData>();
+	public static List<MarketData> eligibleMarketDataList = new ArrayList<MarketData>();
+	public static List<ResultSet> resultSet = new ArrayList<ResultSet>();
+	
+	
 	public static void main(String[] args) {
 
-
-
 		String csvFile = "";
-		Boolean validAmount;
+		
 		try {
 			csvFile = args[0];
 			inputAmount = Double.valueOf(args[1]);
@@ -57,7 +53,6 @@ public class Test {
 		String line = "";
 		String csvSplitBy = ",";
 		int i = 0;
-		List<MarketData> marketDataList = new ArrayList<MarketData>();
 		List<DataHeader> dataHeaderList = new ArrayList<DataHeader>();
 		try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 			while ((line = br.readLine()) != null) {
@@ -72,33 +67,30 @@ public class Test {
 					i = i+1;
 				}else {
 					mkDataObj.setLenderName(data[0]);
-					mkDataObj.setInterestRate(data[1]);
+					mkDataObj.setInterestRate(Double.parseDouble(data[1]));
 					mkDataObj.setAmount(Double.parseDouble(data[2]));
 					marketDataList.add(mkDataObj);	
 				}
-
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-		//OutPut Values
-		//RequestedAmount
-		//MonthlyRepaymentAmount
-		//TotalRepaymentAmount
-		//Rate:
-
-
+		
 		for(MarketData mkd : marketDataList) {
-
 			if(inputAmount<mkd.getAmount()){
-				
-				calculate(inputAmount,Double.parseDouble(mkd.getInterestRate()),Integer.parseInt("12"),Integer.parseInt("3"));
+				eligibleMarketDataList.add(mkd);
+				calculate(inputAmount,(double)mkd.getInterestRate(),NoOfMonths,NoOfYears);
 			}
 		}
-
-
+		
+		Collections.sort(resultSet, new MarketDataRateComparator());
+		for(ResultSet r : resultSet) {
+			System.out.println("-------------------------------------------------");
+			System.out.println("Requested Amount :" + inputAmount);
+			System.out.println("Rate : " + r.getRateOfInterest());
+			System.out.println("Monthly Repayment " + r.getMonthlyRepayment());
+			System.out.println("Total Repayment : " + r.getTotalAmount());
+		}
 	}
 
 	public static void calculate(Double p, Double r, int n, int t) {
@@ -106,12 +98,26 @@ public class Test {
 		double interest = amount - p;
 		double monthlyRepayment = amount/36;
 		double rateInterest = r*100;
+		
+		ResultSet rs = new ResultSet();
+		rs.setMonthlyRepayment(String.valueOf(monthlyRepayment));
+		rs.setRateOfInterest(String.valueOf(rateInterest));
+		rs.setTotalAmount(amount);
+		resultSet.add(rs);
+/*		System.out.println("-------------------------------------------------");
 		System.out.println("Requested Amount :" + inputAmount);
 		System.out.println("Rate : " + rateInterest);
 		System.out.println("Monthly Repayment " + monthlyRepayment);
 		System.out.println("Total Repayment : " + amount);
+*/	}
+
+	public static List<MarketData> getMarketDataList() {
+		return marketDataList;
 	}
 
+	public static void setMarketDataList(List<MarketData> marketDataList) {
+		Test.marketDataList = marketDataList;
+	}
 
 
 }

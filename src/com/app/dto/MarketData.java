@@ -1,52 +1,44 @@
 package com.app.dto;
 
-public class MarketData {
-	
-	public String header1;
-	public String header2;
-	public String header3;
-	
+import java.util.Comparator;
+
+public class MarketData{
+
 	public String lenderName;
-	public String interestRate;
-	public double Amount;
-	
-	
-	
-	public String getHeader1() {
-		return header1;
+	public Double interestRate;
+	public double amount;
+
+	public MarketData() {
+		super();
 	}
-	public void setHeader1(String header1) {
-		this.header1 = header1;
+
+	public MarketData(String lenderName, Double interestRate,double amount) {
+
+		this.lenderName = lenderName;
+		this.interestRate = interestRate;
+		this.amount = amount;
 	}
-	public String getHeader2() {
-		return header2;
-	}
-	public void setHeader2(String header2) {
-		this.header2 = header2;
-	}
-	public String getHeader3() {
-		return header3;
-	}
-	public void setHeader3(String header3) {
-		this.header3 = header3;
-	}
+
 	public String getLenderName() {
 		return lenderName;
 	}
 	public void setLenderName(String lenderName) {
 		this.lenderName = lenderName;
 	}
-	public String getInterestRate() {
+	public Double getInterestRate() {
 		return interestRate;
 	}
-	public void setInterestRate(String interestRate) {
+
+	public void setInterestRate(Double interestRate) {
 		this.interestRate = interestRate;
 	}
+	
 	public double getAmount() {
-		return Amount;
+		return amount;
 	}
 	public void setAmount(double amount) {
-		Amount = amount;
+		this.amount = amount;
 	}
-	
+
 }
+
