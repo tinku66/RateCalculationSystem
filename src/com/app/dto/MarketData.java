@@ -1,3 +1,11 @@
+/**
+ * 
+ */
+/**
+ * @author Tamilarasu
+ *
+ */
+
 package com.app.dto;
 
 public class MarketData{
