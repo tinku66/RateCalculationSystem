@@ -1,7 +1,7 @@
 package com.app.dto;
 
 public class DataHeader {
-
+	
 	public String DataHeader1;
 	public String DataHeader2;
 	public String DataHeader3;

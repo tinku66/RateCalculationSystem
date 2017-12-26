@@ -1,7 +1,5 @@
 package com.app.dto;
 
-import java.util.Comparator;
-
 public class MarketData{
 
 	public String lenderName;
